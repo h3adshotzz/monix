@@ -1,0 +1,11 @@
+build/
+kern/version.h
+.vscode/
+.DS_Store
+*.o
+*.swp
+*.bin
+*.dump
+*.map
+*.dylib
+kernel_elf

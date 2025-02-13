@@ -1,0 +1,91 @@
+Monix TODO
+==========
+
+This document outlines the various tasks, features and bug fixes that need to be
+worked on in the monix kernel. This list is not exhuastive, and will be continously
+updated to reflect the current state of the project. Additional documentation and 
+notes on various TODO items can be found in within the `TODO/` directory.
+
+The following is the list of areas of the kernel that have todo or in-progress
+tasks:
+* Interfaces/Subsystems/whatever they'll be called
+* Tasking and Threading
+* Virtual Memory
+* Drivers
+* Misc
+* Documentation
+
+Interfaces / Subsystems
+---
+The preferred name here still needs to be determined, but a kernel interface/
+subsystem describes an almost self-contained area of the kernel focused on a 
+particular thing, such as machine management. The tasks relating to this are as
+follows:
+* should there be some kind of defined framework/API for these?
+* need to properly define what the existing ones do, i.e. 'platform' and 'machine'
+	* what are they used for?
+	* what are their apis?
+	* platform: primarily a device tree wrapper?
+	* machine: machine topology, interrupts, timers, etc?
+		* acts as an HAL ontop of the arm64 code
+
+
+Tasks and Threads
+---
+Covers tasks, threads, context switching and scheduling:
+* clean up and document the current tasking/threading system
+* spawning additional tasks
+	* only have a single `kernel_task` at the moment
+	* do we allow more than one task to run in kernel space?
+	* user space tasks
+		* this will need additional work in virtual memory
+* what do we actually need?
+	* what sort of tasks/threads are created by linux/freebsd/xnu?
+	* how are they split from the source code?
+	* initproc?
+
+
+Virtual Memory
+---
+Virtual memory management, vm_maps, vm_pages, pmap:
+* clean up and document the current virtual memory system
+* remove the requirement for the base virtual address to be passed as a boot 
+  argument
+* memory attributes, permissions, device memory, etc
+* ensure the kernel is physical-memory position independent
+* KASLR/ASAN?
+
+
+Drivers
+---
+* Do we call them drivers, extensions, or modules?
+* define the api/abi
+* maybe do something like how u-boot handles drivers? not sure how linux works
+
+
+Misc
+---
+* kernel logging/trace
+	* ringbuffer to store early kernel messages
+	* uptime tag
+* CPU feature detection
+	* need an API to detect and handle feature detection
+	* report cpu features like freebsd
+	* align to ARMv8.3 to begin with
+* Linux headers to look at
+	* assembly macros, compiler.h
+	* errno.h
+	* types.h
+* Symbolicate panic backtrace
+* Tests
+	* tests/
+	* at some stage, instead of loading a shell we spin up test_thread
+
+Documentation
+---
+* booting
+	* system register definition
+	* expected register state
+	* boot arguments
+* memory system
+* etc
